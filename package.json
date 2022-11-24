@@ -1,0 +1,19 @@
+{
+  "name": "1.4-task-stream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "stream.js",
+  "bin": {
+    "game": "stream.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "npm": "^8.19.2",
+    "yargs": "^17.6.2"
+  }
+}
