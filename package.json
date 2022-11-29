@@ -1,0 +1,22 @@
+{
+  "name": "getweather",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "get-weather": "index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node -r dotenv/config index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
