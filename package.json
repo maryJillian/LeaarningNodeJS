@@ -1,0 +1,28 @@
+{
+  "name": "learningnodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maryJillian/LearningNodeJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maryJillian/LearningNodeJS/issues"
+  },
+  "homepage": "https://github.com/maryJillian/LearningNodeJS#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20"
+  }
+}
