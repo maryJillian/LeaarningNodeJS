@@ -55,40 +55,41 @@ router.post('/', (req, res) => {
   );
   books.push(newBook);
   res.json(newBook);
-
-  router.put('/:id', (req, res) => {
-    const {books} = store;
-    const {title, description, authors, favorite, fileCover, fileName} = req.body;
-    const {id} = req.params;
-    const idx = books.findIndex(el => el.id === id);
-    if (idx !== -1) {
-      books[idx] = {
-        ...books[idx],
-        title,
-        description,
-        authors,
-        favorite,
-        fileCover,
-        fileName
-      }
-      res.json(books[idx]);
-    } else {
-      res.status(404).json({message: 'Книга не найдена'});
-    }
-  });
-
-  router.delete('/:id', (req, res) => {
-    const {books} = store;
-    const {id} = req.params;
-    const idx = books.findIndex(el => el.id === id);
-    if (idx !== -1) {
-      books.splice(idx, 1);
-      res.json({message: 'Ok'});
-    } else {
-      res.status(404).json({message: 'Книга не найдена'});
-    }
-  });
 });
+
+router.put('/:id', (req, res) => {
+  const {books} = store;
+  const {title, description, authors, favorite, fileCover, fileName} = req.body;
+  const {id} = req.params;
+  const idx = books.findIndex(el => el.id === id);
+  if (idx !== -1) {
+    books[idx] = {
+      ...books[idx],
+      title,
+      description,
+      authors,
+      favorite,
+      fileCover,
+      fileName
+    }
+    res.json(books[idx]);
+  } else {
+    res.status(404).json({message: 'Книга не найдена'});
+  }
+});
+
+router.delete('/:id', (req, res) => {
+  const {books} = store;
+  const {id} = req.params;
+  const idx = books.findIndex(el => el.id === id);
+  if (idx !== -1) {
+    books.splice(idx, 1);
+    res.json({message: 'Ok'});
+  } else {
+    res.status(404).json({message: 'Книга не найдена'});
+  }
+});
+
 
 module.exports = router;
 
