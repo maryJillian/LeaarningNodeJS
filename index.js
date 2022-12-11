@@ -1,5 +1,5 @@
 const express = require('express');
-const booksController = require('./controller/booksController')
+const booksRouter = require('./routes/booksRoutes')
 require('dotenv').config();
 const {PORT} = process.env || 8000
 const bodyParser = require('body-parser');
@@ -13,7 +13,9 @@ app.use(
     extended: true
   }));
 
-app.use('/api/books', booksController);
+app.use('/api/books', booksRouter);
+
+app.use('/public', express.static(__dirname+'/public'));
 
 app.listen(PORT, () => {
   console.log(`Server started on port:${PORT}`)
