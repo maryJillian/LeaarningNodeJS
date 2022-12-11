@@ -7,14 +7,14 @@ const upload = require('../middleware/file');
 
 class Book {
   constructor(
-    id = uuidv4(),
     title = '',
     description = '',
     authors = '',
     favorite = '',
     fileCover = '',
     fileName = '',
-    fileBook = ''
+    fileBook,
+    id = uuidv4(),
   ) {
     this.id = id;
     this.title = title;
@@ -70,7 +70,6 @@ router.post('/', upload.single('fileBook'), (req, res) => {
   }
 
   const newBook = new Book(
-    this.id,
     title,
     description,
     authors,
