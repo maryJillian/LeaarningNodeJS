@@ -31,6 +31,78 @@ const store = {
   books: []
 };
 
+router.get('/index', (req, res) => {
+  const {books} = store;
+  res.render('book/index', {
+    title: 'Список всех книг',
+    books
+  });
+});
+
+router.get('/view/:id', (req, res) => {
+  const {books} = store;
+  const {id} = req.params;
+  const idx = books.findIndex(el => el.id === id);
+
+  if (idx !== -1) {
+    res.render('book/view', {
+      title: 'Информация по конкретной книге',
+      book: books[idx]
+    });
+  } else {
+    res.status(404).json({message: 'Книга не найдена'});
+  }
+});
+
+router.get('/create', (req, res) => {
+  res.render('book/create', {
+    title: 'Создание книги'
+  });
+});
+
+router.post('/create', (req, res) => {
+  const {books} = store;
+  const {title, description, author} = req.body;
+  const newBook = new Book(title, description, author);
+
+  books.push(newBook);
+  res.redirect('/index');
+});
+
+router.get('/update/:id', (req, res) => {
+  const {books} = store;
+  const {id} = req.params;
+  const idx = books.findIndex(el => el.id === id);
+
+  if (idx !== -1) {
+    res.render('book/update', {
+      title: 'Обновление книги',
+      book: books[idx]
+    });
+  } else {
+    res.status(404).json({message: 'Книга не найдена'});
+  }
+});
+
+router.post('/update/:id', (req, res) => {
+  const {books} = store;
+  const {id} = req.params;
+  const {title, description, author} = req.body;
+  const idx = books.findIndex(el => el.id === id);
+
+  if (idx !== -1) {
+    books[idx] = {
+      ...books[idx],
+      title,
+      description,
+      author
+    };
+    res.redirect(`/view/${id}`);
+  } else {
+    res.status(404).json({message: 'Книга не найдена'});
+  }
+});
+
 router.get('/', (req, res) => {
   const {books} = store;
   res.json(books);
@@ -40,13 +112,13 @@ router.get('/:id', (req, res) => {
   const {books} = store;
   const {id} = req.params;
   const idx = books.findIndex(el => el.id === id);
-
   if (idx !== -1) {
     res.json(books[idx]);
   } else {
     res.status(404).json({message: 'Книга не найдена'});
   }
 });
+
 
 router.get('/:id/download', (req, res) => {
   const {books} = store;

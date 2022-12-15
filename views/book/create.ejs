@@ -1,0 +1,15 @@
+<%- include('../port/layout-start', {title: title}) %>
+
+<h2>Добавить книгу</h2>
+<form method="POST">
+    <label for="">Имя</label>
+    <input type="text" name="title" placeholder="Имя"/>
+    <label for="">Описание</label>
+    <input type="text" name="description" placeholder="Описание"/>
+    <label for="">Автор</label>
+    <input type="text" name="author" placeholder="Автор"/>
+    <button type="submit">Сохранить</button>
+</form>
+
+<%- include('../port/layout-end') %>
+
