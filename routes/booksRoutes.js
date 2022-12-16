@@ -50,7 +50,7 @@ router.get('/view/:id', (req, res) => {
       book: books[idx]
     });
   } else {
-    res.status(404).json({message: 'Книга не найдена'});
+    res.redirect('/404');
   }
 });
 
@@ -80,7 +80,7 @@ router.get('/update/:id', (req, res) => {
       book: books[idx]
     });
   } else {
-    res.status(404).json({message: 'Книга не найдена'});
+    res.redirect('/404');
   }
 });
 
@@ -99,7 +99,7 @@ router.post('/update/:id', (req, res) => {
     };
     res.redirect(`/view/${id}`);
   } else {
-    res.status(404).json({message: 'Книга не найдена'});
+    res.redirect('/404');
   }
 });
 
