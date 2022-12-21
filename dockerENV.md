@@ -1,4 +1,5 @@
 docker pull node:15.14
+
 D:\programming\LearningNodeJS>docker pull node:15.14
 15.14: Pulling from library/node
 bfde2ec33fbc: Pull complete
@@ -16,18 +17,13 @@ docker.io/library/node:15.14
 
 
 
-
-
-
-
-
 docker run --env NAME=Marry --env SURNAME=Drozdovskya --name mynode -it node:15.14
+
 Welcome to Node.js v15.14.0.
 Type ".help" for more information.
 
 console.log("Привет, "+process.env.NAME+" "+process.env.SURNAME)
 Привет, Marry Drozdovskya
-
 
 D:\programming\LearningNodeJS>docker stop mynode
 mynode
