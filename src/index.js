@@ -5,6 +5,7 @@ const {PORT} = process.env || 8000
 const bodyParser = require('body-parser');
 const app = express();
 
+
 app.use(bodyParser.json());
 
 app.use(
@@ -15,6 +16,8 @@ app.use(
 app.use('/', booksRouter);
 
 app.use('/public', express.static(__dirname + '/public'));
+
+app.set('views', './src/views');
 
 app.set('view engine', 'ejs');
 

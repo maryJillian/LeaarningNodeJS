@@ -4,6 +4,14 @@ const {v4: uuidv4} = require('uuid');
 const path = require('path');
 const upload = require('../middleware/file');
 
+const redis = require('redis');
+const REDIS_URL = process.env.REDIS_URL || 'localhost';
+const client = redis.createClient({url: REDIS_URL});
+
+(async () => {
+  await client.connect();
+})();
+
 
 class Book {
   constructor(
@@ -37,6 +45,19 @@ router.get('/index', (req, res) => {
     title: 'Список всех книг',
     books
   });
+});
+
+router.get('/counter/:id', async (req, res) => {
+  const {books} = store;
+  const {id} = req.params;
+  const idx = books.findIndex(el => el.id === id);
+
+  if (idx !== -1) {
+    const count = await client.incr(id);
+    res.json({message: 'Counter', count});
+  } else {
+    res.status(500).json({message: 'error'});
+  }
 });
 
 router.get('/view/:id', (req, res) => {
