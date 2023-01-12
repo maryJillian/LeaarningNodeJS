@@ -1,7 +1,11 @@
-require('./models/db');
+require('./config/db');
 const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+require('./config/passport');
 const booksRouter = require('./routes/booksRoutes');
 const apiBooksRouter = require('./routes/apiBooksRoutes');
+const apiUsersRouter = require('./routes/apiUsersRoutes');
 require('dotenv').config();
 const {PORT} = process.env || 8000
 const bodyParser = require('body-parser');
@@ -14,9 +18,15 @@ app.use(
     extended: true
   }));
 
+app.use(session({secret: 'SECRET'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/', booksRouter);
 
 app.use('/api/books', apiBooksRouter);
+
+app.use('/api/user', apiUsersRouter);
 
 app.use('/public', express.static(__dirname + '/public'));
 
