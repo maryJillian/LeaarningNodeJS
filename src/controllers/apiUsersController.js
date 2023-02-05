@@ -37,7 +37,7 @@ const profile = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    console.log("req.user: ", req.user);
+    // console.log("req.user: ", req.user);
     res.redirect('/api/user/me');
   } catch (error) {
     res.redirect('/404');

@@ -13,3 +13,4 @@ mongoose.connect(DB_HOST,
 
 require('../models/book');
 require('../models/user');
+require('../models/comment');

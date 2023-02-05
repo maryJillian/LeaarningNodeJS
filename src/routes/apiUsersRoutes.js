@@ -13,7 +13,10 @@ router.get('/signup', signupForm);
 
 router.get('/me', profile);
 
-router.post('/login', passport.authenticate('local', {failureRedirect: '/api/user/login', failureMessage: true}), login);
+router.post('/login', passport.authenticate('local', {
+  failureRedirect: '/api/user/login',
+  failureMessage: true
+}), login);
 
 router.post('/signup', signup);
 

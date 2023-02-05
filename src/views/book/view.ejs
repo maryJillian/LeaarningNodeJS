@@ -1,7 +1,76 @@
 <%- include('../port/layout-start', {title: title}) %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
 
 <p>Заголовок: <%= !book.title ? 'нет информации о заголовке' : book.title %></p>
 <p>Описание: <%= !book.description ? 'нет информации об описании' : book.description %></p>
 <p>Автор: <%= !book.authors ? 'нет информации об авторе' : book.authors %></p>
+
+<% let objComments = JSON.parse(comments) %>
+
+<% for (let i = 0; i < objComments.length; i++) { %>
+    <div>
+        <div class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <small>
+                    <% for (let j = 0; j < objComments[i].user.length; j++) { %>
+                        <p class="mb-1"><%= objComments[i].user[j].username %></p>
+                    <% } %>
+                </small>
+            </div>
+            <p class="mb-1"><%= objComments[i].message %></p>
+        </div>
+    </div>
+<% } %>
+
+<div class="container">
+    <div id="list" class="list-group"></div>
+
+    <div class="form-group">
+        <label for="text">message</label>
+        <textarea
+                placeholder="message"
+                class="form-control"
+                id="text"
+        ></textarea>
+    </div>
+    <button type="submit" id="send-room" class="btn btn-primary">room</button>
+</div>
+
+<script>
+  const roomName = location.pathname.split('/').pop();
+  const socket = io.connect('/', {query: `roomName=${roomName}`});
+  const boxList = document.querySelector('#list');
+  const inputText = document.querySelector('#text');
+  const sendRoom = document.querySelector('#send-room');
+
+  const getTmp = (message) => {
+    return `
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <small><%= user.username %></small>
+                    </div>
+                    <p class="mb-1">${message.text}</p>
+                </div>
+        `;
+  };
+
+  socket.on('message-to-me', (message) => {
+    const div = getTmp(message);
+    boxList.insertAdjacentHTML('beforeend', div)
+  });
+
+  socket.on('message-to-room', (message) => {
+    const div = getTmp(message)
+    boxList.insertAdjacentHTML('beforeend', div)
+  });
+
+  sendRoom.addEventListener('click', () => {
+    socket.emit('message-to-room', {
+      text: inputText.value,
+      user: '<%= user.id %>'
+    });
+  });
+
+</script>
 
 <%- include('../port/layout-end') %>

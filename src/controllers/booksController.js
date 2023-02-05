@@ -1,5 +1,7 @@
+const mongoose = require('mongoose');
 const {v4: uuidv4} = require('uuid');
 const path = require('path');
+const Comment = mongoose.model('Comment');
 
 
 class Book {
@@ -40,16 +42,33 @@ const getBooks = (req, res) => {
   }
 };
 
-const getBook = (req, res) => {
+const getBook = async (req, res) => {
   try {
+    if (!req.isAuthenticated()) {
+      return res.redirect('/api/user/login')
+    }
     const {books} = store;
     const {id} = req.params;
     const idx = books.findIndex(el => el.id === id);
 
     if (idx !== -1) {
+      const comments = await Comment.aggregate([{
+        $lookup: {
+          from: 'users', localField: 'id_user', foreignField: '_id', as: 'user'
+        }
+      }]);
+      let currentComments = [];
+      for (let i = 0; i < comments.length; i++) {
+        if (comments[i].id_book === id) {
+          currentComments.push(comments[i]);
+        }
+      }
+
       res.render('book/view', {
         title: 'Информация по конкретной книге',
-        book: books[idx]
+        book: books[idx],
+        user: req.user,
+        comments: JSON.stringify(currentComments)
       });
     } else {
       res.redirect('/404');
